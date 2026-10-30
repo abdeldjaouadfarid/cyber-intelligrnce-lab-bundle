@@ -1,0 +1,26 @@
+services:
+  juice-shop:
+    image: bkimminich/juice-shop
+    container_name: cyber-lab-juice-shop
+    networks:
+      labnet:
+        ipv4_address: 172.30.0.10
+    restart: unless-stopped
+
+  ubuntu-target:
+    image: ubuntu:22.04
+    container_name: cyber-lab-ubuntu-target
+    command: ["sleep", "infinity"]
+    networks:
+      labnet:
+        ipv4_address: 172.30.0.20
+    restart: unless-stopped
+
+networks:
+  labnet:
+    name: cyber-labnet
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
